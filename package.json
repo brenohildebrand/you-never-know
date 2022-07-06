@@ -1,0 +1,16 @@
+{
+  "name": "unique-journey-app",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.9.9"
+  },
+  "dependencies": {
+    "pixi.js": "^6.4.2"
+  }
+}
