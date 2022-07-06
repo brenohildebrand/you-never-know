@@ -55,7 +55,10 @@ export default class Storage {
     // If the roots were not created yet, create'em.
     if(roots === null) {
       roots = {
-        version: 
+        version: import.meta.env.APP_VERSION,
+        license: import.meta.env.APP_LICENSE, 
+        website_url: import.meta.env.APP_WEBSITE_URL,
+        // TODO: user: this.username,
       }
     }
 
