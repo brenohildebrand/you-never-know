@@ -1,14 +1,21 @@
 {
-  "name": "unique-journey-app",
-  "private": true,
-  "version": "0.0.0",
+  "name": "you-never-know",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "vite": "^3.0.0"
-  }
+  "repository": {
+    "lab": "node ./lab/index.js",
+    "type": "git",
+    "url": "git+https://github.com/brenoh1ldebr4nd/unique-journey-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brenoh1ldebr4nd/unique-journey-app/issues"
+  },
+  "homepage": "https://github.com/brenoh1ldebr4nd/unique-journey-app#readme"
 }
