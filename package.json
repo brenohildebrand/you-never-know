@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "lab": "firefox ./lab/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/brenoh1ldebr4nd/unique-journey-app/issues"
   },
-  "homepage": "https://github.com/brenoh1ldebr4nd/unique-journey-app#readme"
+  "homepage": "https://github.com/brenoh1ldebr4nd/unique-journey-app#readme",
+  "devDependencies": {
+    "coffeescript": "^2.7.0",
+    "rollup": "^2.77.2"
+  }
 }
