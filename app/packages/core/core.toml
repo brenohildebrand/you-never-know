@@ -1,0 +1,15 @@
+[meta]
+name = "core"
+version = "1.0.0"
+
+[props]
+id = "id"
+from = "id"
+to = "id"
+
+[handlers]
+
+
+[extensions]
+
+
