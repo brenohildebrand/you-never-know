@@ -1,0 +1,23 @@
+{
+  "name": "you-never-know",
+  "version": "1.0.0",
+  "description": "you never know what is going to happen next in your life",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brenoh1ldebr4nd/you-never-know.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brenoh1ldebr4nd/unique-journey-app/issues"
+  },
+  "homepage": "https://github.com/brenoh1ldebr4nd/unique-journey-app#readme",
+  "devDependencies": {
+    "electron": "^20.0.3"
+  }
+}
