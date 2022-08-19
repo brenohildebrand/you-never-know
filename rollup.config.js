@@ -30,7 +30,9 @@ export default [
       format: 'iife',
     },
     plugins: [
-      svelte({}),
+      svelte({
+        emitCss: false,
+      }),
       resolve({ browser: true }),
       html({
         title: 'You Never Know',
