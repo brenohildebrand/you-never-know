@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('node:path');
 const { app, BrowserWindow, ipcMain } = require('electron');
 
@@ -12,7 +14,7 @@ const createWindow = () => {
 
   ipcMain.handle('ping', () => 'pong');
   win.loadFile(path.join(__dirname, 'index.html'));
-}
+};
 
 app.whenReady().then(() => {
   createWindow();
@@ -21,11 +23,11 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
-  })
-})
+  });
+});
 
 app.on('window-all-closed', () => {
   if (process.platform === 'linux' || process.platform === 'win32') {
     app.quit();
   }
-})
+});
