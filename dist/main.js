@@ -12,7 +12,7 @@ const createWindow = () => {
     }
   });
 
-  ipcMain.handle('ping', () => 'pong');
+  ipcMain.handle('ping', () => console.log('pong'));
   win.loadFile(path.join(__dirname, 'index.html'));
 };
 

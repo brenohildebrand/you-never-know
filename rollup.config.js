@@ -1,6 +1,8 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import html from '@rollup/plugin-html';
+import commonjs from '@rollup/plugin-commonjs';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 export default [
   {
@@ -33,7 +35,12 @@ export default [
       svelte({
         emitCss: false,
       }),
-      resolve({ browser: true }),
+      nodePolyfills(),
+      commonjs(),
+      resolve({ 
+        browser: true, 
+        preferBuiltins: true,
+      }),
       html({
         title: 'You Never Know',
         meta: [

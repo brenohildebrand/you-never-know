@@ -20,11 +20,16 @@
   },
   "homepage": "https://github.com/brenoh1ldebr4nd/unique-journey-app#readme",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-html": "^0.2.4",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "electron": "^20.0.3",
     "rollup": "^2.78.0",
+    "rollup-plugin-polyfill-node": "^0.10.2",
     "rollup-plugin-svelte": "^7.1.0",
     "svelte": "^3.49.0"
+  },
+  "dependencies": {
+    "pixi.js": "^6.5.1"
   }
 }
