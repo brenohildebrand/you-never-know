@@ -72,6 +72,9 @@
     function children(element) {
         return Array.from(element.childNodes);
     }
+    function set_input_value(input, value) {
+        input.value = value == null ? '' : value;
+    }
 
     let current_component;
     function set_current_component(component) {
@@ -42367,7 +42370,6 @@
     		c() {
     			div = element("div");
     			input = element("input");
-    			input.value = /*command*/ ctx[1];
     			attr(input, "class", "svelte-11e86fl");
     			attr(div, "id", "command-line");
     			attr(div, "class", "svelte-11e86fl");
@@ -42375,25 +42377,30 @@
     		m(target, anchor) {
     			insert(target, div, anchor);
     			append(div, input);
-    			/*div_binding*/ ctx[3](div);
+    			set_input_value(input, /*command*/ ctx[1]);
+    			/*div_binding*/ ctx[4](div);
 
     			if (!mounted) {
-    				dispose = listen(input, "keydown", /*handleCommandKeyDown*/ ctx[2]);
+    				dispose = [
+    					listen(input, "keydown", /*handleCommandKeyDown*/ ctx[2]),
+    					listen(input, "input", /*input_input_handler*/ ctx[3])
+    				];
+
     				mounted = true;
     			}
     		},
     		p(ctx, [dirty]) {
     			if (dirty & /*command*/ 2 && input.value !== /*command*/ ctx[1]) {
-    				input.value = /*command*/ ctx[1];
+    				set_input_value(input, /*command*/ ctx[1]);
     			}
     		},
     		i: noop$1,
     		o: noop$1,
     		d(detaching) {
     			if (detaching) detach(div);
-    			/*div_binding*/ ctx[3](null);
+    			/*div_binding*/ ctx[4](null);
     			mounted = false;
-    			dispose();
+    			run_all(dispose);
     		}
     	};
     }
@@ -42403,7 +42410,6 @@
     	let command = '';
 
     	function handleCommandKeyDown(event) {
-    		event.preventDefault();
     		const key = event.key;
 
     		if (key === 'Enter') {
@@ -42418,22 +42424,18 @@
     			}
 
     			$$invalidate(1, command = '');
-    			document.body.focus();
+    			commandLine.children[0].blur();
     		} else if (key === 'Escape') {
     			$$invalidate(1, command = '');
-    			document.body.focus();
-    		} else if (key === 'Backspace') {
-    			command.slice(0, command.length() - 1);
-    		} else {
-    			$$invalidate(1, command += key);
+    			commandLine.children[0].blur();
     		}
     	}
 
     	function handleGlobalKeyDown(event) {
-    		event.preventDefault();
     		const key = event.key;
 
     		if (key === ':' && document.activeElement !== commandLine.children[0]) {
+    			event.preventDefault();
     			commandLine.children[0].focus({ preventScroll: true, focusVisible: false });
     			$$invalidate(1, command = ':');
     		}
@@ -42447,6 +42449,11 @@
     		window.removeEventListener('keydown', handleGlobalKeyDown);
     	});
 
+    	function input_input_handler() {
+    		command = this.value;
+    		$$invalidate(1, command);
+    	}
+
     	function div_binding($$value) {
     		binding_callbacks[$$value ? 'unshift' : 'push'](() => {
     			commandLine = $$value;
@@ -42454,7 +42461,7 @@
     		});
     	}
 
-    	return [commandLine, command, handleCommandKeyDown, div_binding];
+    	return [commandLine, command, handleCommandKeyDown, input_input_handler, div_binding];
     }
 
     class CommandLine extends SvelteComponent {

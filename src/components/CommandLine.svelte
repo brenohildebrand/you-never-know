@@ -5,8 +5,6 @@
   let command = '';
 
   function handleCommandKeyDown (event) {
-    event.preventDefault();
-
     const key = event.key; 
 
     if(key === 'Enter') {
@@ -20,23 +18,19 @@
       }
 
       command = '';
-      document.body.focus();
+      commandLine.children[0].blur();
     } else if ( key === 'Escape' ) {
       command = '';
-      document.body.focus();
-    } else if ( key === 'Backspace' ) {
-      command.slice(0, command.length() - 1);
-    } else {
-      command += key;
+      commandLine.children[0].blur();
     }
   }
 
   function handleGlobalKeyDown (event) {
-    event.preventDefault();
-
     const key = event.key;
   
     if (key === ':' && document.activeElement !== commandLine.children[0]) {
+      event.preventDefault();
+
       commandLine.children[0].focus({ 
         preventScroll: true, 
         focusVisible: false 
@@ -56,7 +50,7 @@
 </script>
 
 <div id="command-line" bind:this={commandLine}>
-  <input on:keydown={handleCommandKeyDown} value={command}/>
+  <input on:keydown={handleCommandKeyDown} bind:value={command}/>
 </div>
 
 <style>
