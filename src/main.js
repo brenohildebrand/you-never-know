@@ -11,6 +11,9 @@ const createWindow = () => {
   });
 
   ipcMain.handle('ping', () => console.log('pong'));
+  ipcMain.handle('stdout', (event, msg) => {
+    console.log(msg);
+  });
   win.loadFile(path.join(__dirname, 'index.html'));
 }
 
