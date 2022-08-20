@@ -12,7 +12,7 @@ electron.ipcMain.handle('stdout', (event, msg) => {
 });
 
 electron.ipcMain.handle('db:saveNode', async (event, node) => {
-  // todo
+  console.log('db:saveNode was called!');
 });
 
 const createWindow = () => {

@@ -2,6 +2,8 @@
   import * as PIXI from 'pixi.js';
   import { onMount } from 'svelte';
 
+  export let register;
+
   let canvas;
 
   onMount(() => {

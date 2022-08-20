@@ -28,7 +28,7 @@
 
         // save node
         // request electron to save file 
-        saveNode(newNode);
+        db.saveNode(newNode);
 
         // return successfull message 
       },

@@ -1,6 +1,9 @@
 <script>
   import { onMount, onDestroy } from 'svelte';
 
+  export let register;
+  export let run;
+
   let commandLine = undefined;
   let command = '';
 
