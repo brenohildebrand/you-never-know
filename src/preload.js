@@ -1,12 +1,9 @@
-const { contextBridge, ipcRenderer } = require('electron');
-
-contextBridge.exposeInMainWorld('versions', {
-  node: () => process.versions.node,
-  chrome: () => process.versions.chrome,
-  electron: () => process.versions.electron,
-  ping: () => ipcRenderer.invoke('ping'),
-});
+import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('stdout', (msg) => {
   ipcRenderer.invoke('stdout', msg);
+});
+
+contextBridge.exposeInMainWorld('db', {
+  saveNode: (node) => ipcRenderer.invoke('db:saveNode', node),
 });

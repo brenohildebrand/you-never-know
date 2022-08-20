@@ -1,6 +1,6 @@
+import html from '@rollup/plugin-html';
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
-import html from '@rollup/plugin-html';
 import commonjs from '@rollup/plugin-commonjs';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 
@@ -12,7 +12,8 @@ export default [
       format: 'cjs',
     },
     plugins: [
-      resolve(),
+      // resolve(),
+      // commonjs(),
     ],
   },
   {
@@ -22,7 +23,8 @@ export default [
       format: 'cjs',
     },
     plugins: [
-      resolve(),
+      // resolve(),
+      // commonjs(),
     ],
   },
   {
@@ -32,15 +34,21 @@ export default [
       format: 'iife',
     },
     plugins: [
+      nodePolyfills(),
+      resolve({
+        browser: true,
+        preferBuiltins: true,
+      }),
+      commonjs(),
       svelte({
         emitCss: false,
       }),
-      nodePolyfills(),
-      commonjs(),
-      resolve({ 
-        browser: true, 
-        preferBuiltins: true,
-      }),
+      // nodePolyfills(),
+      // resolve({ 
+      //   browser: true, 
+      //   preferBuiltins: true,
+      // }),
+      // commonjs(),
       html({
         title: 'You Never Know',
         meta: [

@@ -1,36 +1,44 @@
 'use strict';
 
-const path = require('node:path');
-const { app, BrowserWindow, ipcMain } = require('electron');
+var electron = require('electron');
+var path = require('node:path');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
+
+electron.ipcMain.handle('stdout', (event, msg) => {
+  console.log(msg);
+});
+
+electron.ipcMain.handle('db:saveNode', async (event, node) => {
+  // todo
+});
 
 const createWindow = () => {
-  const win = new BrowserWindow({
+  const win = new electron.BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path__default["default"].join(__dirname, 'preload.js'),
     }
   });
 
-  ipcMain.handle('ping', () => console.log('pong'));
-  ipcMain.handle('stdout', (event, msg) => {
-    console.log(msg);
-  });
-  win.loadFile(path.join(__dirname, 'index.html'));
+  win.loadFile(path__default["default"].join(__dirname, 'index.html'));
 };
 
-app.whenReady().then(() => {
+electron.app.whenReady().then(() => {
   createWindow();
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
+  electron.app.on('activate', () => {
+    if (electron.BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
   });
 });
 
-app.on('window-all-closed', () => {
+electron.app.on('window-all-closed', () => {
   if (process.platform === 'linux' || process.platform === 'win32') {
-    app.quit();
+    electron.app.quit();
   }
 });

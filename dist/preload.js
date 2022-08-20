@@ -1,14 +1,11 @@
 'use strict';
 
-const { contextBridge, ipcRenderer } = require('electron');
+var electron = require('electron');
 
-contextBridge.exposeInMainWorld('versions', {
-  node: () => process.versions.node,
-  chrome: () => process.versions.chrome,
-  electron: () => process.versions.electron,
-  ping: () => ipcRenderer.invoke('ping'),
+electron.contextBridge.exposeInMainWorld('stdout', (msg) => {
+  electron.ipcRenderer.invoke('stdout', msg);
 });
 
-contextBridge.exposeInMainWorld('stdout', (msg) => {
-  ipcRenderer.invoke('stdout', msg);
+electron.contextBridge.exposeInMainWorld('db', {
+  saveNode: (node) => electron.ipcRenderer.invoke('db:saveNode', node),
 });

@@ -1,5 +1,13 @@
-const path = require('node:path');
-const { app, BrowserWindow, ipcMain } = require('electron');
+import { app, BrowserWindow, ipcMain } from 'electron';
+import path from 'node:path';
+
+ipcMain.handle('stdout', (event, msg) => {
+  console.log(msg);
+});
+
+ipcMain.handle('db:saveNode', async (event, node) => {
+  // todo
+});
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -10,10 +18,6 @@ const createWindow = () => {
     }
   });
 
-  ipcMain.handle('ping', () => console.log('pong'));
-  ipcMain.handle('stdout', (event, msg) => {
-    console.log(msg);
-  });
   win.loadFile(path.join(__dirname, 'index.html'));
 }
 
