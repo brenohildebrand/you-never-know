@@ -1,6 +1,7 @@
 <script>
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
+  import { v4 as uniqueID } from 'uuid';
   import Canvas from "./Canvas.svelte";
   import CommandLine from "./CommandLine.svelte";
 
@@ -10,12 +11,24 @@
     }
   });
 
-  setContext('commands', (cmd) => {
+  setContext('commands', async (cmd) => {
     switch (cmd) {
       case ':create':
         stdout(`create command was called`);
+        const newNode = {
+          id: uniqueID(),
+          from: undefined,
+          to: undefined,
+          position: {
+            x: undefined,
+            y: undefined,
+          }
+        }
+
         props.commandLine.helper.set('clica pra por o node');
-        stdout(`create command was done executing`);
+        const response = await db.write(newNode);
+        
+        stdout(`create command was done executing with the following response: \n${response}`);
         break;
       case ':delete':
         break;

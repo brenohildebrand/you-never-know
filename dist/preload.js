@@ -7,5 +7,5 @@ electron.contextBridge.exposeInMainWorld('stdout', (msg) => {
 });
 
 electron.contextBridge.exposeInMainWorld('db', {
-  saveNode: (node) => electron.ipcRenderer.invoke('db:saveNode', node),
+  write: (node) => electron.ipcRenderer.invoke('db:write', node),
 });

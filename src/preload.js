@@ -5,5 +5,6 @@ contextBridge.exposeInMainWorld('stdout', (msg) => {
 });
 
 contextBridge.exposeInMainWorld('db', {
-  saveNode: (node) => ipcRenderer.invoke('db:saveNode', node),
+  write: (node) => ipcRenderer.invoke('db:write', node),
+  read: (id) => ipcRenderer.invoke('db:read', id),
 });
