@@ -1,8 +1,6 @@
 <script>
   import * as PIXI from 'pixi.js';
-  import { onMount } from 'svelte';
-
-  export let register;
+  import { onMount, getContext } from 'svelte';
 
   let canvas;
 
