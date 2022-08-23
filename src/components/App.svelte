@@ -11,24 +11,78 @@
     }
   });
 
+  const functions = setContext('functions', {
+    canvas: {
+      draw: {
+        node: writable(undefined),
+      }
+    }
+  });
+
+  const draw = {
+    node: undefined,
+  };
+
+  functions.canvas.draw.node.subscribe((value) => {
+    draw.node = value;
+  });
+
   setContext('commands', async (cmd) => {
     switch (cmd) {
       case ':create':
-        stdout(`create command was called`);
-        const newNode = {
-          id: uniqueID(),
-          from: undefined,
-          to: undefined,
-          position: {
-            x: undefined,
-            y: undefined,
-          }
-        }
+        stdout(`running command: create`);
 
-        props.commandLine.helper.set('clica pra por o node');
-        const response = await db.write(newNode);
+        // Wait for a click to determine the position
+        const position = {
+          x: undefined,
+          y: undefined,
+        };
+
+        window.addEventListener('mousedown', async (event) => {
+          position.x = event.clientX;
+          position.y = event.clientY;
+
+          props.commandLine.helper.set('');
+
+          // create a new node
+          const newNode = {
+            id: uniqueID(),
+            from: undefined,
+            to: undefined,
+            position,
+          }
+
+          const response = await db.write(newNode);
+
+          if (response && draw.node) {
+            // draw node
+            // $functions.canvas.draw.node(newNode);
+            draw.node(newNode);
+            stdout(`done`);
+          } else {
+            stdout(`oh-ow, something went wrong!`);
+          }
+        }, { once: true });
+
+        props.commandLine.helper.set('click to insert node');
+
+        // Create a new node
+        // const newNode = {
+        //   id: uniqueID(),
+        //   from: undefined,
+        //   to: undefined,
+        //   position,
+        // }
+
+        // const response = await db.write(newNode);
         
-        stdout(`create command was done executing with the following response: \n${response}`);
+        // if (response) {
+        //   // draw node
+        //   functions.canvas.draw.node(newNode);
+        //   stdout(`done`);
+        // } else {
+        //   stdout(`oh-ow, something went wrong!`)
+        // }
         break;
       case ':delete':
         break;
