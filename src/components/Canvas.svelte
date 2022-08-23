@@ -29,8 +29,6 @@
     interaction: app.renderer.plugins.interaction,
   })
 
-  viewport.
-
   window.addEventListener('resize', () => {
     viewport.resize(window.innerWidth, window.innerHeight, 1000, 1000);
   });
@@ -48,6 +46,12 @@
 
   draw.node.set((node) => {
     const { id, position } = node;
+
+    // fix position based on viewport shift
+    stdout(`old position: ${position.x}, ${position.y}`);
+    position.x -= viewport.position.x;
+    position.y -= viewport.position.y;
+    stdout(`new position: ${position.x}, ${position.y}`);
 
     const preset = {
       radius: 50,
