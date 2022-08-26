@@ -8,7 +8,7 @@ export default [
   {
     input: 'src/main.js',
     output: {
-      file: 'dist/main.js',
+      file: 'compiled/main.js',
       format: 'cjs',
     },
     plugins: [
@@ -19,7 +19,7 @@ export default [
   {
     input: 'src/preload.js',
     output: {
-      file: 'dist/preload.js',
+      file: 'compiled/preload.js',
       format: 'cjs',
     },
     plugins: [
@@ -30,7 +30,7 @@ export default [
   {
     input: 'src/renderer.js',
     output: {
-      file: 'dist/renderer.js',
+      file: 'compiled/renderer.js',
       format: 'iife',
     },
     plugins: [

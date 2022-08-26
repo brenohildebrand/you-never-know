@@ -38,8 +38,6 @@
       mouseButtons: 'left',
       keyToPress: ['Space'],
     })
-    .pinch()
-    .wheel()
     .decelerate({
       friction: 0.90, // default is 0.95
     })

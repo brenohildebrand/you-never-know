@@ -1,5 +1,6 @@
 .vscode
 dist
+compiled
 lab
 node_modules
 TODO

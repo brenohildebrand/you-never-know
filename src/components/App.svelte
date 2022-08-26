@@ -65,24 +65,6 @@
         }, { once: true });
 
         props.commandLine.helper.set('click to insert node');
-
-        // Create a new node
-        // const newNode = {
-        //   id: uniqueID(),
-        //   from: undefined,
-        //   to: undefined,
-        //   position,
-        // }
-
-        // const response = await db.write(newNode);
-        
-        // if (response) {
-        //   // draw node
-        //   functions.canvas.draw.node(newNode);
-        //   stdout(`done`);
-        // } else {
-        //   stdout(`oh-ow, something went wrong!`)
-        // }
         break;
       case ':delete':
         break;
