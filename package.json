@@ -1,0 +1,37 @@
+{
+  "name": "you-never-know",
+  "version": "1.0.0",
+  "description": "you never know what is going to happen next in your life",
+  "main": "compiled/main.js",
+  "scripts": {
+    "prestart": "npm run compile",
+    "start": "electron .",
+    "compile": "rollup --config rollup.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brenoh1ldebr4nd/you-never-know.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brenoh1ldebr4nd/unique-journey-app/issues"
+  },
+  "homepage": "https://github.com/brenoh1ldebr4nd/unique-journey-app#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-html": "^0.2.4",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "electron": "^20.0.3",
+    "rollup": "^2.78.0",
+    "rollup-plugin-polyfill-node": "^0.10.2",
+    "rollup-plugin-svelte": "^7.1.0",
+    "svelte": "^3.49.0"
+  },
+  "dependencies": {
+    "pixi-viewport": "^4.35.0",
+    "pixi.js": "^6.5.1",
+    "uuid": "^8.3.2"
+  }
+}
