@@ -14,7 +14,7 @@
   const functions = setContext('functions', {
     canvas: {
       draw: {
-        node: writable(undefined),
+        node: writable(undefined), 
       }
     }
   });

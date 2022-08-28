@@ -2,21 +2,6 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 
-/**
- * App Startup
- */
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    }
-  });
-
-  win.loadFile(path.join(__dirname, 'index.html'));
-}
-
 app.whenReady().then(() => {
   createWindow();
 
@@ -33,48 +18,49 @@ app.on('window-all-closed', () => {
   }
 })
 
+function createWindow () {
+  const win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+    }
+  });
 
-/**
- * Handlers
- */
-const dbPath = path.join(__dirname, 'db');
+  win.loadFile(path.join(__dirname, 'index.html'));
+}
 
-ipcMain.handle('stdout', (event, msg) => {
-  console.log(msg);
-});
 
-ipcMain.handle('db:write', async (event, node) => {
-  console.log('db:write was called!');
-  // check if it's a valid node
-  // important for security
+// Handlers
+const handlers = {
+  "stdout": (event, msg) => {
+    console.log(msg);
+  },
+  "db:write": async (event, node) => {
+    const str = JSON.stringify(node);
 
-  // IMPORTANT: during the installation of the app, mkdir on dbPath
+    try {
+      const filePath = path.join(__dirname, 'db', node.id);
+      await fs.writeFile(filePath, str);
+    } catch ( err ) {
+      return err;
+    }
 
-  // stringify
-  const str = JSON.stringify(node); 
-
-  // try to save
-  try {
-    const filePath = path.join(dbPath, node.id);
-    await fs.writeFile(filePath, str);
-  } catch ( err ) {
-    return err;
+    return 'the node was successfully stored!';
+  },
+  "db:read": async (event, id) => {
+    try {
+      const filePath = path.join(__dirname, 'db', id);
+      const str = await fs.readFile(filePath, { encoding: 'utf-8' });
+      const node = JSON.parse(str);
+      return node;
+    } catch ( err ) {
+      return err;
+    }
   }
-  
-  // return success
-  return 'The node was successfully stored.';
-});
+};
 
-ipcMain.handle('db:read', async (event, id) => {
-  console.log('db:read was called!');
-  
-  try {
-    const filePath = path.join(dbPath, id);
-    const str = await fs.readFile(filePath, { encoding: 'utf8' });
-    const node = JSON.parse(str);
-
-    return node;
-  } catch ( err ) {
-    return err;
-  }
-});
+// activate handlers
+for(const key in handlers) {
+  ipcMain.handle(key, handler[key]);
+}
