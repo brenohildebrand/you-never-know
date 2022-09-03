@@ -3,7 +3,8 @@
   import { writable } from 'svelte/store';
   import { v4 as uniqueID } from 'uuid';
   import Canvas from "./Canvas.svelte";
-  import CommandLine from "./CommandLine.svelte";
+  import DayOfTheWeek from './DayOfTheWeek.svelte';
+  import NodeInfo from './NodeInfo.svelte';
 
   const props = setContext('props', {
     commandLine: {
@@ -78,8 +79,44 @@
   });
 </script>
 
-<Canvas></Canvas>
-<CommandLine></CommandLine>
+<div id="ui-layer">
+  <div id="header">
+    <NodeInfo node={{
+      name: 'Only the beginning of the adventure',
+      description: 'Lorem ipsum dolor sit amet.',
+    }}/>
+    <DayOfTheWeek />
+  </div>
+</div>
+<div id="canvas-layer">
+  <Canvas></Canvas>
+</div>
 
 <style>
+  #ui-layer {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  #canvas-layer {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  #header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+
+    padding: 30px 60px;
+  }
 </style>
