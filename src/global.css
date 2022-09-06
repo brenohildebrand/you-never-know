@@ -39,6 +39,11 @@
     box-sizing: border-box;
 }
 
+html {
+    /* base rem value */
+    font-size: 16px;
+}
+
 body {
     width: 100vw;
     height: 100vh;
@@ -48,4 +53,22 @@ body {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
+
+    color: #484848;
+
+    background-color: #F0F0F0;
+}
+
+h1 {
+    font-size: 1.4rem;
+}
+
+p {
+    font-size: 0.8rem;
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 18px;
+    }
 }

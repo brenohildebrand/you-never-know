@@ -5,5 +5,4 @@
 <h1>{node.name}</h1>
 
 <style>
-
 </style>

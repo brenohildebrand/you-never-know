@@ -15,11 +15,13 @@ const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: true,
+    autoHideMenuBar: true,
+
     webPreferences: {
       preload: paths.preload,
     }
   })
-
   win.loadFile(paths.html)
 }
 

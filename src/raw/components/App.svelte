@@ -5,6 +5,7 @@
   import Canvas from "./Canvas.svelte";
   import DayOfTheWeek from './DayOfTheWeek.svelte';
   import NodeInfo from './NodeInfo.svelte';
+  import Shortcuts from './Shortcuts.svelte';
 
   const props = setContext('props', {
     commandLine: {
@@ -86,6 +87,7 @@
       description: 'Lorem ipsum dolor sit amet.',
     }}/>
     <DayOfTheWeek />
+    <Shortcuts />
   </div>
 </div>
 <div id="canvas-layer">
