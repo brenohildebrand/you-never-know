@@ -2,6 +2,12 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 
+const paths = {
+  preload: path.join(__dirname, 'preload.js'),
+  html: path.join(__dirname, '..', 'index.html'),
+  database: path.join(__dirname, '..', 'database'), 
+}
+
 /**
  * App Startup
  */
@@ -10,11 +16,11 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: paths.preload,
     }
-  });
+  })
 
-  win.loadFile(path.join(__dirname, 'index.html'));
+  win.loadFile(paths.html)
 }
 
 app.whenReady().then(() => {
@@ -37,8 +43,6 @@ app.on('window-all-closed', () => {
 /**
  * Handlers
  */
-const dbPath = path.join(__dirname, 'db');
-
 ipcMain.handle('stdout', (event, msg) => {
   console.log(msg);
 });
@@ -48,14 +52,14 @@ ipcMain.handle('db:write', async (event, node) => {
   // check if it's a valid node
   // important for security
 
-  // IMPORTANT: during the installation of the app, mkdir on dbPath
+  // IMPORTANT: during the installation of the app, mkdir on paths.database
 
   // stringify
   const str = JSON.stringify(node); 
 
   // try to save
   try {
-    const filePath = path.join(dbPath, node.id);
+    const filePath = path.join(paths.database, node.id);
     await fs.writeFile(filePath, str);
   } catch ( err ) {
     return err;
@@ -69,7 +73,7 @@ ipcMain.handle('db:read', async (event, id) => {
   console.log('db:read was called!');
   
   try {
-    const filePath = path.join(dbPath, id);
+    const filePath = path.join(paths.database, id);
     const str = await fs.readFile(filePath, { encoding: 'utf8' });
     const node = JSON.parse(str);
 

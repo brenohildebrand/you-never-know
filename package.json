@@ -2,7 +2,7 @@
   "name": "you-never-know",
   "version": "1.0.0",
   "description": "you never know what is going to happen next in your life",
-  "main": "compiled/main.js",
+  "main": "src/compiled/main.js",
   "scripts": {
     "prestart": "npm run compile",
     "start": "electron .",

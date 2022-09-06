@@ -1,4 +1,3 @@
-import html from '@rollup/plugin-html';
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
@@ -6,9 +5,9 @@ import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 export default [
   {
-    input: 'src/main.js',
+    input: 'src/raw/main.js',
     output: {
-      file: 'compiled/main.js',
+      file: 'src/compiled/main.js',
       format: 'cjs',
     },
     plugins: [
@@ -17,9 +16,9 @@ export default [
     ],
   },
   {
-    input: 'src/preload.js',
+    input: 'src/raw/preload.js',
     output: {
-      file: 'compiled/preload.js',
+      file: 'src/compiled/preload.js',
       format: 'cjs',
     },
     plugins: [
@@ -28,9 +27,9 @@ export default [
     ],
   },
   {
-    input: 'src/renderer.js',
+    input: 'src/raw/renderer.js',
     output: {
-      file: 'compiled/renderer.js',
+      file: 'src/compiled/renderer.js',
       format: 'iife',
     },
     plugins: [
@@ -49,22 +48,6 @@ export default [
       //   preferBuiltins: true,
       // }),
       // commonjs(),
-      html({
-        title: 'You Never Know',
-        meta: [
-          {
-            "charset": "UTF-8",
-          },
-          {
-            "http-equiv": "X-UA-Compatible",
-            "content": "IE=edge",
-          },
-          {
-            "name": "viewport",
-            "content": "width=device-width, initial-scale=1.0",
-          }
-        ]
-      }),
     ]
   }
 ];
