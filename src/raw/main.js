@@ -1,86 +1,41 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
-import fs from 'node:fs/promises';
+import './handlers.js';
 
-const paths = {
-  preload: path.join(__dirname, 'preload.js'),
-  html: path.join(__dirname, '..', 'index.html'),
-  database: path.join(__dirname, '..', 'database'), 
-}
+const pathToPreload = path.join(__dirname, 'preload.js');
+const pathToHTML = path.join(__dirname, '..', 'index.html');
 
-/**
- * App Startup
- */
-const createWindow = () => {
-  const win = new BrowserWindow({
+const createMainWindow = () => {
+  const window = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: true,
     autoHideMenuBar: true,
-
     webPreferences: {
-      preload: paths.preload,
+      preload: pathToPreload,
     }
   })
-  win.loadFile(paths.html)
+
+  window.loadFile(pathToHTML);
 }
 
-app.whenReady().then(() => {
-  createWindow();
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
+const main = async () => {
+  // Windows and Linux
+  app.on('window-all-closed', () => {
+    if (process.platform === 'linux' || process.platform === 'win32')
+      app.quit();
   })
-})
 
-app.on('window-all-closed', () => {
-  if (process.platform === 'linux' || process.platform === 'win32') {
-    app.quit();
-  }
-})
+  // MacOS
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0)
+      createMainWindow();
+  })
 
+  // Wait till it's ready
+  await app.whenReady();
 
-/**
- * Handlers
- */
-ipcMain.handle('stdout', (event, msg) => {
-  console.log(msg);
-});
+  // Create the main window
+  createMainWindow();
+}
 
-ipcMain.handle('db:write', async (event, node) => {
-  console.log('db:write was called!');
-  // check if it's a valid node
-  // important for security
-
-  // IMPORTANT: during the installation of the app, mkdir on paths.database
-
-  // stringify
-  const str = JSON.stringify(node); 
-
-  // try to save
-  try {
-    const filePath = path.join(paths.database, node.id);
-    await fs.writeFile(filePath, str);
-  } catch ( err ) {
-    return err;
-  }
-  
-  // return success
-  return 'The node was successfully stored.';
-});
-
-ipcMain.handle('db:read', async (event, id) => {
-  console.log('db:read was called!');
-  
-  try {
-    const filePath = path.join(paths.database, id);
-    const str = await fs.readFile(filePath, { encoding: 'utf8' });
-    const node = JSON.parse(str);
-
-    return node;
-  } catch ( err ) {
-    return err;
-  }
-});
+main();
