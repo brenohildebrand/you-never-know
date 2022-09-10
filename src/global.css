@@ -55,16 +55,7 @@ body {
     font-weight: 400;
 
     color: #484848;
-
     background-color: #F0F0F0;
-}
-
-h1 {
-    font-size: 1.4rem;
-}
-
-p {
-    font-size: 0.8rem;
 }
 
 @media (min-width: 1200px) {

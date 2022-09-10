@@ -6,11 +6,12 @@ import * as PIXI from 'pixi.js';
 const pixi = new PIXI.Application({
     width: window.innerWidth,
     height: window.innerHeight,
-    backgroundColor: 0xff0000,
+    backgroundColor: 0xf0f0f0,
     antialias: true,
     resizeTo: window,
 });
 
+// Viewport
 const viewport = new Viewport({
     screenWidth: window.innerWidth,
     screenHeight: window.innerHeight,
@@ -31,7 +32,12 @@ viewport
 
 pixi.stage.addChild(viewport);
 
-// The Canvas Component
+// Resize
+window.addEventListener('resize', () => {
+    viewport.resize(window.innerWidth, window.innerHeight, 1000, 1000);
+});
+
+// Canvas 
 const Canvas = new Component({
     name: 'canvas',
     element: pixi.view,
@@ -39,13 +45,19 @@ const Canvas = new Component({
         width: '100vw',
         height: '100vh',
         position: 'fixed',
-        zIndex: '0',
+        overflow: 'hidden',
     },
 });
 
-// handle resize
-window.addEventListener('resize', () => {
-    viewport.resize(window.innerWidth, window.innerHeight, 1000, 1000);
-});
+// Draw
+const graphics = new PIXI.Graphics();
+graphics.beginFill(0x000);
+graphics.drawCircle(0, 0, 100);
+graphics.endFill();
+
+graphics.interactive = true;
+graphics.buttonMode = true;
+
+viewport.addChild(graphics);
 
 export default Canvas;

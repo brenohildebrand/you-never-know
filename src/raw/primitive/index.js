@@ -1,41 +1,55 @@
 function Component ({
     children = [],
-    element = undefined,
-    name = undefined, 
-    styles = {},
-    tagName = 'div', 
+    element  = undefined,
+    name     = undefined,
+    styles   = {},
+    tagName  = 'div',
 }) {
+    // declare
     const component = {};
 
-    component.element = element || document.createElement(tagName);
+    // create
+    component['element'] = element || (() => {
+        const returnValue = document.createElement(tagName);
+        returnValue.id = name;
 
-    if (element) {
-        component.element = element;
-    } else {
-        component.element = document.createElement(tagName);
-        component.element.id = name; 
-    }
+        return returnValue;
+    })();
 
-    component.styles = styles;
-    Object.entries(styles).forEach(([key, value]) => {
-        component.element.style[key] = value;
-    })
 
-    component.state = 'default';
-    component.listeners = [];
-    component.subscribe = (listener) => {
-        component.listeners.push(listener);
+    component['styles'] = (() => {
+        const returnValue = styles;
 
-        return function unsubscribe () {
-            component.listeners = component.listeners.filter(l => l !== listener);
+        Object.entries(styles).forEach(([key, value]) => {
+            component['element'].style[key] = value;
+        })
+
+        return returnValue;
+    })();
+
+    component['state'] = 'default';
+    
+    component['listeners'] = [];
+
+    component['subscribe'] = (listener) => {
+        component['listeners'].push(listener);
+
+        return () => {
+            component['listeners'] = component['listeners'].filter(l => l !== listener);
         }
     }
 
-    component.children = children;
-    children.forEach(childComponent => {
-        component.element.appendChild(childComponent.element);
-    })
+    component['children'] = (() => {
+        const returnValue = children;
 
+        children.forEach(childComponent => {
+            component['element'].appendChild(childComponent.element);
+        })
+
+        return returnValue;
+    })();
+
+    // return
     return component;
 }
 
