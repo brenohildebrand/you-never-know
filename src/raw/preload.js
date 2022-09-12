@@ -4,7 +4,8 @@ contextBridge.exposeInMainWorld('stdout', (msg) => {
   ipcRenderer.invoke('stdout', msg);
 });
 
-contextBridge.exposeInMainWorld('db', {
-  write: (node) => ipcRenderer.invoke('db:write', node),
-  read: (id) => ipcRenderer.invoke('db:read', id),
+contextBridge.exposeInMainWorld('database', {
+  write: (node) => ipcRenderer.invoke('database::write', node),
+  read: (id) => ipcRenderer.invoke('database::read', id),
+  fetch: () => ipcRenderer.invoke('database::fetch'), 
 });

@@ -9,8 +9,37 @@ ipcMain.handle('stdout', (event, msg) => {
     console.log(msg);
 });
 
+// fetch
+ipcMain.handle('database::fetch', async (event) => {
+    try {
+        const nodes = {};
+
+        const fileNames = await fs.readdir(pathToDatabase);
+
+        for(const fileName of fileNames) {
+            const pathToFile = path.join(pathToDatabase, fileName);
+            const file = await fs.readFile(pathToFile, { encoding: 'utf-8' });
+            const node = JSON.parse(file);
+            
+            nodes[fileName] = {
+                ...node,
+                position: {
+                    x: Number(node.position.x),
+                    y: Number(node.position.y),
+                }
+            };
+        }
+
+        return nodes;
+    } 
+    catch (err) {
+        console.log(err);
+        return 1;
+    }
+});
+
 // write
-ipcMain.handle('db::write', async (event, node) => {
+ipcMain.handle('database::write', async (event, node) => {
     // TODO: check if the node is valid
 
     try {
@@ -29,7 +58,7 @@ ipcMain.handle('db::write', async (event, node) => {
 });
 
 // read
-ipcMain.handle('db::read', async (event, id) => {
+ipcMain.handle('database::read', async (event, id) => {
     try {
         const pathToFile = path.join(pathToDatabase, id);
         const str = await fs.readFile(pathToFile, { encoding: 'utf-8' })
@@ -42,3 +71,13 @@ ipcMain.handle('db::read', async (event, id) => {
         return 1;
     }
 });
+
+// readAll
+ipcMain.handle('database::readAll', async (event) => {
+    try {
+
+    } catch ( err ) {
+        console.log(err);
+        return 1;
+    }
+})

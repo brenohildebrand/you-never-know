@@ -1,0 +1,9 @@
+{
+    "id": "b",
+    "name": "node b",
+    "description": "I am the node b",
+    "position": {
+        "x": "250",
+        "y": "200"
+    }
+}

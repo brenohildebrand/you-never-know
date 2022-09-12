@@ -1,0 +1,10 @@
+{
+    "id": "a",
+    "name": "node a",
+    "description": "I am the node a",
+    "position": {
+        "x": "100",
+        "y": "350"
+    },
+    "childID": "b.json"
+}
