@@ -1,7 +1,5 @@
 import { Component } from "../primitive";
 
-// by pressing SPC you get to the Sketch board
-
 const Sketch = new Component({
     name: "sketch",
     tagName: "canvas",
@@ -37,7 +35,7 @@ Sketch.element.addEventListener('pointerup', (e) => {
 
 Sketch.element.addEventListener('pointermove', (e) => {
     if (isPainting) {
-        context.lineWidth = 3;
+        context.lineWidth = 1;
         context.lineCap = 'round';
     
         context.lineTo(e.clientX, e.clientY);
@@ -49,5 +47,7 @@ window.addEventListener('resize', () => {
     context.canvas.width = window.innerWidth;
     context.canvas.height = window.innerHeight;
 });
+
+// by pressing Control-Space you get to the Sketch board ( App.js )
 
 export default Sketch;

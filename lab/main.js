@@ -1,8 +1,17 @@
-const fs = require('fs/promises');
-const path = require('path');
+const obj = {
+    timeInSeconds: 2,
+    timeInMilliseconds: this.timeInSeconds * 1000,
+};
 
-const exe = (async () => {
-    const pathToDatabase = path.join('src', 'database');
-    const files = await fs.readdir(pathToDatabase);
-    console.log(files);
-})();
+const obg = {};
+obg.timeInSeconds = 2;
+obg.timeInMilliseconds = obg.timeInSeconds * 1000;
+
+function Obj () {
+    this.timeInSeconds = 3;
+    this.timeInMilliseconds = this.timeInSeconds * 1000;
+}
+
+console.log(obj.timeInMilliseconds);
+console.log(obg.timeInMilliseconds);
+console.log((new Obj()).timeInMilliseconds);

@@ -1,4 +1,5 @@
 import { Component } from "../primitive";
+import AppStore from "../stores/AppStore";
 
 const NodeDescription = new Component({
     name: 'NodeDescription',
@@ -15,5 +16,9 @@ const NodeDescription = new Component({
 })
 
 NodeDescription.element.innerText = 'This is where everything starts. Feel free to create new nodes holding the ALT key and pressing the LMB ( Left Mouse Button ).';
+
+AppStore.subscribe('selectedNode', (node) => {
+    NodeDescription.element.innerText = node.description;
+});
 
 export default NodeDescription;

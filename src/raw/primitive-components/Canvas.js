@@ -1,6 +1,7 @@
 import { Component } from "../primitive";
 import { Viewport } from 'pixi-viewport';
 import * as PIXI from 'pixi.js';
+import AppStore from "../stores/AppStore";
 
 // Pixi
 const pixi = new PIXI.Application({
@@ -68,6 +69,29 @@ function draw (nodes) {
 
         // draw circle
         const graphics = new PIXI.Graphics();
+        graphics.interactive = true;
+        graphics.buttonMode = true;
+
+        node.graphics = graphics;
+
+        graphics.on('pointerdown', () => {
+            // restore
+            const previousNode = AppStore.getProp('selectedNode');
+            previousNode?.graphics
+                .clear()
+                .beginFill(0x949494)
+                .drawCircle(0, 0, 24)
+                .endFill()
+
+            // create border
+            AppStore.setProp('selectedNode', node);
+            node.graphics
+                .clear()
+                .lineStyle(3, 0x484848, 1)
+                .beginFill(0x949494)
+                .drawCircle(0, 0, 24)
+                .endFill()
+        });
 
         graphics
             .beginFill(0x949494)

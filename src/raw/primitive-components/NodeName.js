@@ -1,4 +1,5 @@
 import { Component } from "../primitive";
+import AppStore from "../stores/AppStore";
 
 const NodeName = new Component({
     name: 'NodeName',
@@ -12,11 +13,12 @@ const NodeName = new Component({
         
         // textShadow: '0 -1px 1px #fafafa',
     },
-    children: [
-
-    ],
 });
 
 NodeName.element.innerText = 'Only the Beginning of the Adventure';
+
+AppStore.subscribe('selectedNode', (node) => {
+    NodeName.element.innerText = node.name;
+});
 
 export default NodeName;

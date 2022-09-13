@@ -5,52 +5,48 @@ function Component ({
     styles   = {},
     tagName  = 'div',
 }) {
-    // declare
-    const component = {};
-
     // create
-    component['element'] = element || (() => {
-        const returnValue = document.createElement(tagName);
-        returnValue.id = name;
+    this.element = (() => {
+        if (element) {
+            return element;
+        } else {
+            const element = document.createElement(tagName);
+            element.id = name;
 
-        return returnValue;
-    })();
-
-
-    component['styles'] = (() => {
-        const returnValue = styles;
-
-        Object.entries(styles).forEach(([key, value]) => {
-            component['element'].style[key] = value;
-        })
-
-        return returnValue;
-    })();
-
-    component['state'] = 'default';
-    
-    component['listeners'] = [];
-
-    component['subscribe'] = (listener) => {
-        component['listeners'].push(listener);
-
-        return () => {
-            component['listeners'] = component['listeners'].filter(l => l !== listener);
+            return element;
         }
-    }
+    })();
 
-    component['children'] = (() => {
-        const returnValue = children;
+    // styles
+    this.styles = (() => {
+        Object.entries(styles).forEach(([key, value]) => {
+            this.element.style[key] = value;
+        });
+
+        return styles;
+    })();
+
+    // children
+    this.children = (() => {
+        children.forEach(childComponent => {
+            this.element.appendChild(childComponent.element);
+        });
+
+        return children;
+    })();
+
+    // setChildren
+    this.setChildren = (children) => {
+        for (const childComponent of this.children) {
+            childComponent.element.remove();
+        } 
+
+        this.children = children;
 
         children.forEach(childComponent => {
-            component['element'].appendChild(childComponent.element);
+            this.element.appendChild(childComponent.element);
         })
-
-        return returnValue;
-    })();
-
-    // return
-    return component;
+    }
 }
 
 export { Component };
