@@ -68,13 +68,11 @@ function draw (nodes) {
         const child = nodes[childID];
 
         // draw circle
-        const graphics = new PIXI.Graphics();
-        graphics.interactive = true;
-        graphics.buttonMode = true;
+        node.graphics = new PIXI.Graphics();
+        node.graphics.interactive = true;
+        node.graphics.buttonMode = true;
 
-        node.graphics = graphics;
-
-        graphics.on('pointerdown', () => {
+        node.graphics.on('pointerdown', () => {
             // restore
             const previousNode = AppStore.getProp('selectedNode');
             previousNode?.graphics
@@ -93,14 +91,14 @@ function draw (nodes) {
                 .endFill()
         });
 
-        graphics
+        node.graphics
             .beginFill(0x949494)
             .drawCircle(0, 0, 24)
             .endFill()
         
-        graphics.position.set(position.x, position.y);
+        node.graphics.position.set(position.x, position.y);
 
-        viewport.addChild(graphics);
+        viewport.addChild(node.graphics);
 
         // draw connections from parent to child
         if ( child ) {
@@ -131,10 +129,9 @@ function draw (nodes) {
     }
 }
 
-    // shift position based on viewport shift
-    // position.x -= viewport.position.x;
-    // position.y -= viewport.position.y;
-
+// shift position based on viewport shift
+// position.x -= viewport.position.x;
+// position.y -= viewport.position.y;
 //     // drag functions
 //     function onDragStart(event) {
 //         this.data = event.data;
@@ -155,27 +152,10 @@ function draw (nodes) {
 //             this.y = newPosition.y;
 //         }
 //     }
-
-//     // drawing
-//     const graphics = new PIXI.Graphics();
-
-//     graphics.beginFill(0x000);
-//     graphics.drawCircle(0, 0, 50);
-//     graphics.endFill();
-    
-//     graphics.name = name;
-//     graphics.position.set(position.x, position.y);
-//     graphics.interactive = true;
-//     graphics.buttonMode = true;
-
 //     graphics
 //         .on('pointerdown', onDragStart)
 //         .on('pointerup', onDragEnd)
 //         .on('pointerupoutside', onDragEnd)
 //         .on('pointermove', onDragMove)
-
-//     // add to viewport
-//     viewport.addChild(graphics);
-// }
 
 export default Canvas;
