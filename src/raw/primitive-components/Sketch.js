@@ -14,18 +14,25 @@ const Sketch = new Component({
 });
 
 const context = Sketch.element.getContext("2d");
+
+context.canvas.width = window.innerWidth;
+context.canvas.height = window.innerHeight;
+
 let isPainting = false;
 
 Sketch.element.addEventListener('pointerdown', (e) => {
+    ctx.beginPath();
+    ctx.moveTo(e.clientX, e.clientY);
+}, { once: true });
+
+Sketch.element.addEventListener('pointerdown', (e) => {
     isPainting = true;
-    console.log('down');
 });
 
 Sketch.element.addEventListener('pointerup', (e) => {
     isPainting = false;
     context.stroke();
     context.beginPath();
-    console.log('up');
 });
 
 Sketch.element.addEventListener('pointermove', (e) => {
@@ -36,6 +43,11 @@ Sketch.element.addEventListener('pointermove', (e) => {
         context.lineTo(e.clientX, e.clientY);
         context.stroke();
     }
+});
+
+window.addEventListener('resize', () => {
+    context.canvas.width = window.innerWidth;
+    context.canvas.height = window.innerHeight;
 });
 
 export default Sketch;
