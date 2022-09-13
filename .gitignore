@@ -3,4 +3,5 @@ dist
 compiled
 lab
 node_modules
+/src/database
 TODO
