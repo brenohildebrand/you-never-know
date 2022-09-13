@@ -1,5 +1,6 @@
 import { Component } from '../primitive/index';
 import Canvas from './Canvas';
+import Sketch from './Sketch';
 import UserInterface from './UserInterface';
 
 const App = new Component({
@@ -9,8 +10,9 @@ const App = new Component({
         
     },
     children: [
-        Canvas,
-        UserInterface,
+        // Canvas,
+        // UserInterface,
+        Sketch,
     ],
 });
 

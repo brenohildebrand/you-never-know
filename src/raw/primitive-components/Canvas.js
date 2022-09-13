@@ -70,7 +70,7 @@ function draw (nodes) {
         const graphics = new PIXI.Graphics();
 
         graphics
-            .beginFill(0x000)
+            .beginFill(0x949494)
             .drawCircle(0, 0, 24)
             .endFill()
         
@@ -91,7 +91,7 @@ function draw (nodes) {
             // const addToRotation = () => graphics.rotation += 0.1;
             // setInterval(addToRotation, 1000);
 
-            graphics.beginFill(0x000);
+            graphics.beginFill(0x949494);
             graphics.drawRect(
                 0,
                 0, 
